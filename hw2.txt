@@ -1,0 +1,54 @@
+The project consists of 4 functions, one is used to convert a
+homework 1 style into a homework 2 style grammar and the other
+three are used for the parser.
+
+convert_grammar
+To convert a homework 1 style grammar to a homework 2 style
+grammar I needed to keep the first element as the start symbol
+as the first element of the tuple and then I made the second 
+element a function that takes in a non-terminal and finds the
+right hand sides corresponding to its particular start symbol
+from the homework 1 grammar using the function alternate_list
+
+parse_prefix
+The function takes in a grammar, acceptor and fragment to 
+function currie to the matcher the function uses to return the
+derivation. In this function I used the following two functions
+that were declared with the "and" keyword in order to allow me 
+to run the two recursive functions at the same time.
+
+element_matcher
+The function takes in all the rules, the current rule, both from
+the grammar and the acceptor, derivation and fragment. When the 
+elements in the matcher functio are being matched the derivation
+passed in is the derivation appended to the start rule and the 
+rule itself. Since every element is matched, if the rule is an empty
+list, it is matched with empty list, if not, the fragment matched 
+with either the empty list or is broken down to the prefix and the 
+rest of the fragment. If there is a match with the empty list, then
+the function returns None. If there is a match, we use the matcher to
+try to match to a terminal symbol. If the prefix matches the terminal 
+symbol and is the terminal symbol being searched for in the fragment,
+then we use the element_matcher to search for the next element, if not,
+the terminal isn't in the fragment and the function returns None. 
+
+matcher
+The matcher is a higher level matcher. It takes in the starting symbol
+of the grammar, the rules of the grammar, the matching rules, the acceptor,
+the derivation and fragment. The function parses through rules that match 
+with the grammar's start symbol then the rules are broken up into the 
+first rule in the list and the rest of the rules in the list. Then the 
+element_matcher is used and is matched with either Some resulting derivation
+or None. If element_matcher returns a none, then the current rule is skipped
+and the other rules are looked at and if there is a result, then the result
+is returned.  
+
+My two test casees:
+test_1
+test_1 checks to see if the function works with the grammar rules in the 
+grammar in a different order and returns the same result. At the same time
+it checks to see if the convert_grammar function works.
+
+test_2
+Test two checks to see if the function works with a longer than average
+length.
